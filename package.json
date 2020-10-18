@@ -4,6 +4,9 @@
 	"main": "index.ts",
 	"author": "William S.",
 	"license": "MIT",
+	"scripts": {
+		"dev": "webpack-dev-server"
+	},
 	"dependencies": {
 		"@types/lodash": "^4.14.152",
 		"@types/three": "^0.103.2",
