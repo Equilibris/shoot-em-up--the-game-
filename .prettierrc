@@ -1,5 +1,5 @@
 {
 	"useTabs": true,
-	"semi": false,
+	"semi": true,
 	"singleQuote": true
 }
