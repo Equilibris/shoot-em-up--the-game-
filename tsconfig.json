@@ -1,17 +1,7 @@
 {
-	"include": ["src"],
 	"compilerOptions": {
-		"watch": true,
-		"outDir": "./dist/",
-		"sourceMap": true,
-		"module": "es6",
-		"target": "es5",
-		"jsx": "react",
-		"allowJs": true,
-		"moduleResolution": "node",
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noImplicitAny": true,
-		"strictNullChecks": true
-	}
+		"target": "es6",
+		"moduleResolution": "node"
+	},
+	"include": ["./src/**/*.ts"]
 }
