@@ -1,7 +1,9 @@
 {
 	"compilerOptions": {
 		"target": "es6",
-		"moduleResolution": "node"
+		"moduleResolution": "node",
+		"sourceMap": true,
+		"typeRoots": ["./src/customTypes"]
 	},
 	"include": ["./src/**/*.ts"]
 }
