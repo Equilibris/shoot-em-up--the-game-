@@ -1,60 +1,52 @@
 import * as THREE from 'three';
+import { DRACOLoader } from 'three/examples/jsm/loaders/DRACOLoader';
 
-const palet = ['#E63946', '#F1FAEE', '#A8DADC', '#457B9D', '#1D3557'];
+import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js';
+
+import jet_model from './models/fighter_trans/fighter_trans.glb';
+import jet_texture from './models/fighter-jet/textures/gltf_embedded_0.png';
 
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0x202020);
-
-const orthographicScale = 0.03;
-const camera = new THREE.OrthographicCamera(
-	(innerWidth * orthographicScale) / -2,
-	(innerWidth * orthographicScale) / 2,
-	(innerHeight * orthographicScale) / 2,
-	(innerHeight * orthographicScale) / -2,
-	1,
+const camera = new THREE.PerspectiveCamera(
+	75,
+	window.innerWidth / window.innerHeight,
+	0.1,
 	1000
 );
 
-camera.position.set(20, 20, 20);
-camera.lookAt(new THREE.Vector3(0, 0, 0));
-
-const renderer = new THREE.WebGLRenderer({
-	antialias: true,
-});
+const renderer = new THREE.WebGLRenderer();
 renderer.setSize(window.innerWidth, window.innerHeight);
 document.body.appendChild(renderer.domElement);
 
-const cube = new THREE.Mesh(
-	new THREE.SphereGeometry(2, 2, 2),
-	new THREE.MeshBasicMaterial()
+const geometry = new THREE.BoxGeometry();
+const material = new THREE.MeshBasicMaterial({ color: 0x00ff00 });
+const cube = new THREE.Mesh(geometry, material);
+// scene.add(cube);
+
+const loader = new GLTFLoader();
+
+loader.load(
+	jet_model,
+	(gltf) => {
+		scene.add(gltf.scene);
+	},
+	(xhr) => {
+		console.log((xhr.loaded / xhr.total) * 100 + '% loaded');
+	},
+	(error) => {
+		console.error(error);
+	}
 );
 
-scene.add(cube);
+const directionalLight = new THREE.DirectionalLight(0xffffff, 1.5);
+scene.add(directionalLight);
 
-for (let i = 0; i < 10; i++) {
-	const size = i + Math.random() / 2;
+camera.position.z = 5;
 
-	const mesh = new THREE.Mesh(
-		new THREE.BoxGeometry(size, size, size),
-		new THREE.MeshNormalMaterial()
-	);
-
-	mesh.rotateX(i / 15);
-	mesh.rotateY(i / 15);
-	mesh.rotateZ(i / 15);
-
-	mesh.position.set(-size, -size, -size);
-	scene.add(mesh);
-}
-
-const sceneLight1 = new THREE.DirectionalLight(0x404040);
-
-sceneLight1.position.z = 10;
-
-scene.add(sceneLight1);
-
-const animate = () => {
+const animate = function () {
 	requestAnimationFrame(animate);
+
 	renderer.render(scene, camera);
 };
+
 animate();
