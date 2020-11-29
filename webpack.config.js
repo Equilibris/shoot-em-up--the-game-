@@ -9,31 +9,28 @@ module.exports = {
 					{
 						test: /\.tsx?$/,
 						use: 'ts-loader',
-						exclude: /node_modules/,
+						include: [path.resolve(__dirname, 'src')],
 					},
 					{
 						loader: require.resolve('file-loader'),
 						exclude: [/\.(js|mjs|jsx|ts|tsx)$/, /\.html$/, /\.json$/],
 						options: {
-							name: 'public/media/[name].[hash:8].[ext]',
+							name: 'media/[name].[hash:8].[ext]',
 						},
 					},
 				],
 			},
 		],
 	},
-	resolve: {
-		extensions: ['.tsx', '.ts', '.js'],
-	},
-	output: {
-		filename: 'bundle.js',
-		path: path.resolve(__dirname, 'public'),
-	},
+	devtool: 'source-map',
 	mode: 'development',
-	watch: true,
+	output: {
+		path: path.resolve(__dirname, 'public'),
+		publicPath: '/',
+		filename: 'bundle.js',
+	},
 	devServer: {
-		contentBase: path.join(__dirname, 'public'),
-		compress: true,
+		contentBase: path.resolve(__dirname, 'public'),
 		port: 9000,
 	},
 };
